@@ -168,5 +168,52 @@ test('Пустое поле username, валидное поле password', async
     await expect(panelFailed).toBeVisible()
     await expect(panelFailed).toHaveText('Invalid username or password.  Signon failed.')
 })
+});
+
+test.describe('Урок 3', () => {
+    test('Селектор - текст', async({page})=>{
+    await page.goto('https://jpetstore.aspectran.com/account/signonForm')
+    await expect(page).toHaveURL('https://jpetstore.aspectran.com/account/signonForm')
+    const fish = page.locator ('text=Fish').nth(0)
+    await expect(fish).toBeVisible()
+    const dogs = page.locator ('text=Dogs').nth(0)
+    await expect(dogs).toBeVisible()
+    const reptiles = page.locator ('text=Reptiles').nth(0)
+    await expect(reptiles).toBeVisible()
+    const cats = page.locator ('text=Cats').nth(0)
+    await expect(cats).toBeVisible()
+    const birds = page.locator ('text=Birds').nth(0)
+    await expect(birds).toBeVisible()
+    })
+
+    test('Селектор - CSS', async({page})=>{
+    await page.goto('https://jpetstore.aspectran.com/catalog/')
+    await expect(page).toHaveURL('https://jpetstore.aspectran.com/catalog/')
+    const quickLinksID = page.locator('#QuickLinks')
+    await expect(quickLinksID).toBeVisible()
+    const quickLinksClass = page.locator('.grid-container').nth(2)
+    await expect(quickLinksClass).toBeVisible()
+    })
+
+    test('Селектор - фильтрация по тексту', async({page})=>{
+        await page.goto('https://jpetstore.aspectran.com/account/signonForm')
+        await expect(page).toHaveURL('https://jpetstore.aspectran.com/account/signonForm')
+        const LoginButton = page.locator('.button-bar', {hasText: 'Login'})
+        await expect(LoginButton).toBeVisible()
+        })
+
+        test('Селектор - фильтрация по другому локатору', async({page})=>{
+            await page.goto('https://jpetstore.aspectran.com/account/signonForm')
+            await expect(page).toHaveURL('https://jpetstore.aspectran.com/account/signonForm')
+            const signonForm = page.locator('#Signon', {has: page.locator('[class="panel"]')})
+            await expect(signonForm).toBeVisible()
+            })
+
+        test('Селектор - обращение к дочернему элементу', async({page})=>{
+            await page.goto('https://jpetstore.aspectran.com/account/signonForm')
+            await expect(page).toHaveURL('https://jpetstore.aspectran.com/account/signonForm')
+            const header = page.locator('[id="Header"]>>[id="Menu"]')
+            await expect(header).toBeVisible()
+            })
 
 })
